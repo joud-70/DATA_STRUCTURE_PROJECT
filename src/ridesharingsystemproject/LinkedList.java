@@ -7,7 +7,7 @@ public  class LinkedList<T> implements List<T> {
 
     private Node<T> head;
     private Node<T> current;
-    int size = 0;
+    //int size = 0;
 
     public LinkedList() {
         head = current = null;
