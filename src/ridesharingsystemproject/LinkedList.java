@@ -3,10 +3,11 @@ package ridesharingsystemproject;
 
 
 
-public class LinkedList<T> implements List<T> {
+public  class LinkedList<T> implements List<T> {
 
     private Node<T> head;
     private Node<T> current;
+    int size = 0;
 
     public LinkedList() {
         head = current = null;
@@ -72,4 +73,22 @@ public class LinkedList<T> implements List<T> {
             current = current.next;
         }
     }
+    
+    
+    
+    // method added to help 
+    
+    // method ""display"" to print all the element of the list in proper format
+    
+    public void display() {
+    Node<T> current = head;
+
+    while (current != null) {
+        System.out.println(current.data+"");
+        System.out.println("---------------");
+        current = current.next;
+    }
+} 
+    
+    
 }
