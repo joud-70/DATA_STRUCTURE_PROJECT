@@ -3,13 +3,13 @@ package ridesharingsystemproject;
 import java.util.*;
 
  abstract class  Person implements IPerson {
-    protected int ID;
+    protected final int ID;
     protected String name ;
     protected String PhoneNumber;
     protected List<IRide> rideHistory;
     Scanner scanner = new Scanner (System.in);
 
-    public Person(int ID, String name, String PhoneNumber, List<IRide> rideHistory) {
+    public Person(int ID, String name, String PhoneNumber) {
         this.ID = ID;
         this.name = name;
         setPhoneNumber(PhoneNumber);
@@ -82,11 +82,11 @@ import java.util.*;
     }
 
     // Returns a formatted string describing this person.
-    @Override
-   public  String toString(){
-        
-    return "";
-    }
 
+    @Override
+    public String toString() {
+        return "Person{" + "ID=" + ID + ", name=" + name + ", PhoneNumber=" + PhoneNumber + '}';
+    }
+   
 
 }
