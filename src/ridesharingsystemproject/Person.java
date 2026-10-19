@@ -1,19 +1,17 @@
 
 package ridesharingsystemproject;
-import java.util.*;
+
 
  abstract class  Person implements IPerson {
     protected final int ID;
     protected String name ;
     protected String PhoneNumber;
-    protected List<IRide> rideHistory;
-    Scanner scanner = new Scanner (System.in);
+    protected LinkedList<IRide> rideHistory = new LinkedList<IRide>();
 
     public Person(int ID, String name, String PhoneNumber) {
         this.ID = ID;
         this.name = name;
         setPhoneNumber(PhoneNumber);
-        this.rideHistory = rideHistory;
     }
     
     
@@ -45,47 +43,34 @@ import java.util.*;
      * e.g., "0551234567"). Implementations must validate the format and
      * throw IllegalArgumentException if it does not match.
      */
-    public void setPhoneNumber(String phoneNumber){
-        boolean flag = false; 
-        while(flag == false){
-        try{
-    if(phoneNumber==null || phoneNumber.length()!=10 )
-        throw new IllegalArgumentException ("The phone number must be 10 digits long\n");
-        
-    // Check if the phone number contains only digits
-        char x ;
-        
-        for(int i=0 ; i <phoneNumber.length(); i++){
-            x=phoneNumber.charAt(i);
-            if(x<'0' || x > '9')
-                 throw new IllegalArgumentException ("the phone number must contains digits only\n");
-        }
-  
-               
 
-    this.PhoneNumber=phoneNumber;
-    flag = true;
-    
-        }
-        catch(IllegalArgumentException e){
-        System.out.println("Please enter the phone number again");
-        phoneNumber=scanner.next();
-        }
-    }
-        
-    }
 
+     public void setPhoneNumber(String phoneNumber) {
+       if (phoneNumber == null || phoneNumber.length() != 10) {
+           throw new IllegalArgumentException("The phone number must be exactly 10 digits");
+       }
+       for (int i = 0; i < phoneNumber.length(); i++) {
+           char c = phoneNumber.charAt(i);
+           if (c < '0' || c > '9') {
+               throw new IllegalArgumentException("The phone number must contain digits only");
+           }
+       }
+       this.PhoneNumber = phoneNumber;
+   }
+     
+     
+     
     //return the list of rides associated with this person (as a rider, or as an assigned driver).
     public LinkedList<IRide> getRideHistory(){
     
-    return null ;
+    return rideHistory ;
     }
 
     // Returns a formatted string describing this person.
 
     @Override
     public String toString() {
-        return "Person{" + "ID=" + ID + ", name=" + name + ", PhoneNumber=" + PhoneNumber + '}';
+        return  "ID=" + ID + ", name=" + name + ", PhoneNumber=" + PhoneNumber ;
     }
    
 

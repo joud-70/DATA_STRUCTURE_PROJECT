@@ -6,7 +6,7 @@ public class Rider extends Person implements IRider {
     protected String email;
     protected String homeCity;
 
-    public Rider(String email, String homeCity, int ID, String name, String PhoneNumber, List<IRide> rideHistory) {
+    public Rider(String email, String homeCity, int ID, String name, String PhoneNumber) {
         super(ID, name, PhoneNumber);
         this.email = email;
         this.homeCity = homeCity;
@@ -41,11 +41,11 @@ public class Rider extends Person implements IRider {
             return 0;
     }
 
-    @Override
-    public String toString() {
-        return "Rider{" + "email=" + email + ", homeCity=" + homeCity + '}';
-    }
-    
+   @Override
+public String toString() {
+    return "Rider{" + super.toString() + ", email=" + email + ", homeCity=" + homeCity + "}";
+}
+   
     
     
 }
