@@ -6,7 +6,7 @@ public class Driver extends Person implements IDriver {
     protected String vehiclePlate;
     protected VehicleType vehicleType;
 
-    public Driver(String vehiclePlate, VehicleType vehicleType, int ID, String name, String PhoneNumber) {
+    public Driver(int ID, String name, String PhoneNumber, String vehiclePlate, VehicleType vehicleType) {
         super(ID, name, PhoneNumber);
         setVehicleType(vehicleType);
         setVehiclePlate(vehiclePlate);
@@ -53,5 +53,8 @@ public class Driver extends Person implements IDriver {
         return this.getId()-other.getId();
     }
 
-    
+        @Override
+    public String toString() {
+        return "Driver{" + super.toString() + ", plate=" + vehiclePlate + ", vehicleType=" + vehicleType + "}";
+    }
 }

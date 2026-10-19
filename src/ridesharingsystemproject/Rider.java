@@ -6,7 +6,7 @@ public class Rider extends Person implements IRider {
     protected String email;
     protected String homeCity;
 
-    public Rider(String email, String homeCity, int ID, String name, String PhoneNumber) {
+    public Rider(int ID, String name, String email, String PhoneNumber, String homeCity) {
         super(ID, name, PhoneNumber);
         this.email = email;
         this.homeCity = homeCity;
