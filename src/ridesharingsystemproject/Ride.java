@@ -9,7 +9,7 @@ public abstract class Ride implements IRide {
     private final IDateTime dropoffTime;
     private IDriver driver;
 
-    // Constructor
+    // Creates a ride; throws IllegalArgumentException if the times are invalid
     public Ride(int rideId, String pickupLocation,
                 String dropoffLocation, IDateTime pickupTime,
                 IDateTime dropoffTime, IDriver driver) {
@@ -30,7 +30,7 @@ public abstract class Ride implements IRide {
         this.dropoffTime = dropoffTime;
         this.driver = driver;
     }
-
+// Returns the unique ID of this ride
     @Override
     public int getRideId() {
         return rideId;
@@ -75,7 +75,7 @@ public abstract class Ride implements IRide {
     public void setDriver(IDriver driver) {
         this.driver = driver;
     }
-
+// Compares rides alphabetically by pickup location
     @Override
     public int compareTo(IRide other) {
         return this.pickupLocation.compareTo(
