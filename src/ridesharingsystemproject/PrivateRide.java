@@ -33,4 +33,11 @@ public class PrivateRide extends Ride implements IPrivateRide {
     public boolean hasRider(int riderId) {
         return rider != null && rider.getId() == riderId;
     }
+
+    @Override
+public String toString() {
+    return "Private Ride | " + super.toString()
+            + ", Driver: " + getDriver().getName()
+            + ", Rider: " + rider.getName();
+}
 }
