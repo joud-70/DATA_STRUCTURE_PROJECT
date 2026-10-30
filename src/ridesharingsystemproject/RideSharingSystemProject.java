@@ -431,8 +431,16 @@ public class RideSharingSystemProject implements IRideSharingSystem {
     }
 
     return result;
+    }
+    
+    @Override
+    public LinkedList<IRide> getAllRidesAlphabetically() {
+        return rideList.getAllAlphabetically();
+    }
 }
-}
+
+
+
     
     
 
