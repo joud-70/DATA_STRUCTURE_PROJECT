@@ -76,19 +76,7 @@ public  class LinkedList<T> implements List<T> {
     
     
     
-    // method added to help 
-    
-    // method ""display"" to print all the element of the list in proper format
-    
-    public void display() {
-    Node<T> current = head;
-
-    while (current != null) {
-        System.out.println(current.data+"");
-        System.out.println("---------------");
-        current = current.next;
-    }
-} 
+   
     
     
 }
