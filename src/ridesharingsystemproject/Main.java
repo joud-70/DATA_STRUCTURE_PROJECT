@@ -2,14 +2,19 @@ package ridesharingsystemproject;
 
 import java.util.Scanner;
 
+/**
+ * Command-line menu of the Ride-Sharing System.
+ * This is the only class that reads input from the user and prints output.
+ * It calls the methods of RideSharingSystem and prints what they return.
+ */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static RideSharingSystem system = new RideSharingSystem();
 
+    // Loads the CSV files, then shows the menu until the user chooses 0
     public static void main(String[] args) {
 
         // Load the data before showing the menu (riders and drivers first, then rides)
-
         System.out.println("Loading data...");
 
         if (system.loadRidersFromCSV("riders_100.csv"))
@@ -81,6 +86,8 @@ public class Main {
     }
 
     // ================== Menu ==================
+
+    // Prints the 12 menu options and the exit option
     public static void printMenu() {
         System.out.println("========== Ride-Sharing System ==========");
         System.out.println("1.  List all riders");
@@ -99,89 +106,30 @@ public class Main {
         System.out.println("=========================================");
     }
 
-    // ============== Riders ===============
+    // ================== Riders ==================
+
+    // Asks for a home city and prints the riders who live there
     public static void searchRidersByHomeCity() {
-        System.out.print("Enter home city: ");
-        String city = scanner.nextLine();
-
-        int left = 0;
-        int right = city.length();
-
-        while (left < right && city.charAt(left) <= ' ')
-            left++;
-        while (right > left && city.charAt(right - 1) <= ' ')
-            right--;
-
-        city = city.substring(left, right);
+        String city = readText("Enter home city: ");
         printRiders(system.searchRidersByHomeCity(city));
     }
 
+    // Asks for a full name and prints the riders with that name
     public static void searchRidersByName() {
-        System.out.print("Enter rider full name: ");
-        String name = scanner.nextLine();
-
-        int left = 0;
-        int right = name.length();
-
-        while (left < right && name.charAt(left) <= ' ')
-            left++;
-        while (right > left && name.charAt(right - 1) <= ' ')
-            right--;
-
-        name = name.substring(left, right);
+        String name = readText("Enter rider full name: ");
         printRiders(system.searchRidersByName(name));
     }
 
+    // Reads the rider data and adds a new rider to the system
     public static void addRider() {
         int id = readInt("Rider ID: ");
-
-        System.out.print("Full name: ");
-        String name = scanner.nextLine();
-        int left = 0;
-        int right = name.length();
-
-        while (left < right && name.charAt(left) <= ' ')
-            left++;
-        while (right > left && name.charAt(right - 1) <= ' ')
-            right--;
-        name = name.substring(left, right);
-
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        left = 0;
-        right = email.length();
-
-        while (left < right && email.charAt(left) <= ' ')
-            left++;
-        while (right > left && email.charAt(right - 1) <= ' ')
-            right--;
-        email = email.substring(left, right);
-
-        System.out.print("Phone number (10 digits): ");
-        String phone = scanner.nextLine();
-        left = 0;
-        right = phone.length();
-
-        while (left < right && phone.charAt(left) <= ' ')
-            left++;
-        while (right > left && phone.charAt(right - 1) <= ' ')
-            right--;
-        phone = phone.substring(left, right);
-
-        System.out.print("Home city: ");
-        String city = scanner.nextLine();
-        left = 0;
-        right = city.length();
-
-        while (left < right && city.charAt(left) <= ' ')
-            left++;
-        while (right > left && city.charAt(right - 1) <= ' ')
-            right--;
-        city = city.substring(left, right);
+        String name = readText("Full name: ");
+        String email = readText("Email: ");
+        String phone = readText("Phone number (10 digits): ");
+        String city = readText("Home city: ");
 
         try {
             // The constructor throws IllegalArgumentException if the phone is invalid
-
             Rider rider = new Rider(id, name, email, phone, city);
             if (system.addRider(rider))
                 System.out.println("Rider added successfully.");
@@ -192,7 +140,9 @@ public class Main {
         }
     }
 
-    // ============== Drivers ===============
+    // ================== Drivers ==================
+
+    // Asks for a vehicle type and prints the drivers who use it
     public static void searchDriversByVehicleType() {
         VehicleType type = readVehicleType();
         if (type == null)
@@ -200,41 +150,12 @@ public class Main {
         printDrivers(system.searchDriversByVehicleType(type));
     }
 
+    // Reads the driver data and adds a new driver to the system
     public static void addDriver() {
         int id = readInt("Driver ID: ");
-
-        System.out.print("Full name: ");
-        String name = scanner.nextLine();
-        int left = 0;
-        int right = name.length();
-
-        while (left < right && name.charAt(left) <= ' ')
-            left++;
-        while (right > left && name.charAt(right - 1) <= ' ')
-            right--;
-        name = name.substring(left, right);
-
-        System.out.print("Phone number (10 digits): ");
-        String phone = scanner.nextLine();
-        left = 0;
-        right = phone.length();
-
-        while (left < right && phone.charAt(left) <= ' ')
-            left++;
-        while (right > left && phone.charAt(right - 1) <= ' ')
-            right--;
-        phone = phone.substring(left, right);
-
-        System.out.print("Vehicle plate (3 uppercase letters + 4 digits, e.g. ABC1234): ");
-        String plate = scanner.nextLine();
-        left = 0;
-        right = plate.length();
-
-        while (left < right && plate.charAt(left) <= ' ')
-            left++;
-        while (right > left && plate.charAt(right - 1) <= ' ')
-            right--;
-        plate = plate.substring(left, right);
+        String name = readText("Full name: ");
+        String phone = readText("Phone number (10 digits): ");
+        String plate = readText("Vehicle plate (3 uppercase letters + 4 digits, e.g. ABC1234): ");
 
         VehicleType type = readVehicleType();
         if (type == null)
@@ -242,7 +163,6 @@ public class Main {
 
         try {
             // The constructor throws IllegalArgumentException if the phone or plate is invalid
-
             Driver driver = new Driver(id, name, phone, plate, type);
             if (system.addDriver(driver))
                 System.out.println("Driver added successfully.");
@@ -253,86 +173,36 @@ public class Main {
         }
     }
 
-    // ============== Rides ==============
+    // ================== Rides ==================
+
+    // Asks for a pickup location and prints the rides that start there
     public static void searchRidesByPickupLocation() {
-        System.out.print("Enter pickup location: ");
-        String location = scanner.nextLine();
-
-        int left = 0;
-        int right = location.length();
-
-        while (left < right && location.charAt(left) <= ' ')
-            left++;
-        while (right > left && location.charAt(right - 1) <= ' ')
-            right--;
-
-        location = location.substring(left, right);
+        String location = readText("Enter pickup location: ");
         printRides(system.searchRidesByPickupLocation(location));
     }
 
+    // Asks for a rider name and prints the rides that include this rider
     public static void searchRidesByRiderName() {
-        System.out.print("Enter rider full name: ");
-        String name = scanner.nextLine();
-
-        int left = 0;
-        int right = name.length();
-
-        while (left < right && name.charAt(left) <= ' ')
-            left++;
-        while (right > left && name.charAt(right - 1) <= ' ')
-            right--;
-
-        name = name.substring(left, right);
+        String name = readText("Enter rider full name: ");
         printRides(system.searchRidesByRiderName(name));
     }
 
+    // Asks for a pickup location and prints the riders of the shared rides that start there
     public static void showSharedRideParticipants() {
-        System.out.print("Enter pickup location of the shared ride: ");
-        String location = scanner.nextLine();
-
-        int left = 0;
-        int right = location.length();
-
-        while (left < right && location.charAt(left) <= ' ')
-            left++;
-        while (right > left && location.charAt(right - 1) <= ' ')
-            right--;
-
-        location = location.substring(left, right);
+        String location = readText("Enter pickup location of the shared ride: ");
         printRiders(system.getSharedRideParticipants(location));
     }
 
+    // Reads the ride data and schedules a private or a shared ride
     public static void addRide() {
-        System.out.print("Is the ride private or shared? (P = private, S = shared): ");
-        String type = scanner.nextLine();
-
-        int left = 0;
-        int right = type.length();
-
-        while (left < right && type.charAt(left) <= ' ')
-            left++;
-        while (right > left && type.charAt(right - 1) <= ' ')
-            right--;
-
-        type = type.substring(left, right).toUpperCase();
+        String type = readText("Is the ride private or shared? (P = private, S = shared): ").toUpperCase();
 
         if (!type.equals("P") && !type.equals("S")) {
             System.out.println("Invalid ride type. The ride was not added.");
             return;
         }
 
-        System.out.print("Pickup location: ");
-        String pickupLocation = scanner.nextLine();
-
-        left = 0;
-        right = pickupLocation.length();
-
-        while (left < right && pickupLocation.charAt(left) <= ' ')
-            left++;
-        while (right > left && pickupLocation.charAt(right - 1) <= ' ')
-            right--;
-
-        pickupLocation = pickupLocation.substring(left, right);
+        String pickupLocation = readText("Pickup location: ");
 
         IDateTime pickupTime = readDateTime("Pickup date/time (MM/DD/YYYY HH:MM): ");
         if (pickupTime == null)
@@ -342,32 +212,19 @@ public class Main {
         if (dropoffTime == null)
             return;
 
-        System.out.print("Drop-off location: ");
-        String dropoffLocation = scanner.nextLine();
-
-        left = 0;
-        right = dropoffLocation.length();
-
-        while (left < right && dropoffLocation.charAt(left) <= ' ')
-            left++;
-        while (right > left && dropoffLocation.charAt(right - 1) <= ' ')
-            right--;
-
-        dropoffLocation = dropoffLocation.substring(left, right);
+        String dropoffLocation = readText("Drop-off location: ");
 
         int driverId = readInt("Driver ID: ");
 
         boolean scheduled;
         if (type.equals("P")) {
             // Private ride: exactly one rider
-
             int riderId = readInt("Rider ID: ");
             scheduled = system.schedulePrivateRide(
                     pickupLocation, pickupTime, dropoffTime,
                     dropoffLocation, riderId, driverId);
         } else {
             // Shared ride: more than one rider
-
             int[] riderIds = readRiderIds();
             if (riderIds == null)
                 return;
@@ -376,6 +233,7 @@ public class Main {
                     pickupLocation, pickupTime, dropoffTime,
                     dropoffLocation, riderIds, driverId);
         }
+
         if (scheduled)
             System.out.println("Ride scheduled successfully.");
         else
@@ -383,7 +241,9 @@ public class Main {
                     + "invalid times, or a schedule conflict).");
     }
 
-    // =========== Printing lists ===========
+    // ================== Printing lists ==================
+
+    // Prints every rider in the list, or a message if the list is empty
     public static void printRiders(LinkedList<IRider> list) {
         if (list == null || list.empty()) {
             System.out.println("No results found.");
@@ -395,9 +255,10 @@ public class Main {
             System.out.println(list.retrieve());
             list.findNext();
         }
-        System.out.println(list.retrieve());
+        System.out.println(list.retrieve()); // the last element
     }
 
+    // Prints every driver in the list, or a message if the list is empty
     public static void printDrivers(LinkedList<IDriver> list) {
         if (list == null || list.empty()) {
             System.out.println("No results found.");
@@ -409,9 +270,10 @@ public class Main {
             System.out.println(list.retrieve());
             list.findNext();
         }
-        System.out.println(list.retrieve());
+        System.out.println(list.retrieve()); // the last element
     }
 
+    // Prints every ride in the list, or a message if the list is empty
     public static void printRides(LinkedList<IRide> list) {
         if (list == null || list.empty()) {
             System.out.println("No results found.");
@@ -423,39 +285,13 @@ public class Main {
             System.out.println(list.retrieve());
             list.findNext();
         }
-        System.out.println(list.retrieve());
+        System.out.println(list.retrieve()); // the last element
     }
 
-    // ============= Reading input ===============
-    // Keeps asking until the user enters a valid integer
+    // ================== Reading input ==================
 
-    public static int readInt(String message) {
-        while (true) {
-            System.out.print(message);
-            try {
-                String number = scanner.nextLine();
-
-                int left = 0;
-                int right = number.length();
-
-                while (left < right && number.charAt(left) <= ' ')
-                    left++;
-                while (right > left && number.charAt(right - 1) <= ' ')
-                    right--;
-
-                return Integer.parseInt(number.substring(left, right));
-
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
-            }
-        }
-    }
-
-    // Reads a vehicle type; returns null if the input is not a valid type
-    public static VehicleType readVehicleType() {
-        System.out.print("Vehicle type (SEDAN, LUXURY_SEDAN, SUV, VAN): ");
-        String text = scanner.nextLine();
-
+    // Removes the spaces (and other blank characters) from the start and end of a text
+    public static String trimText(String text) {
         int left = 0;
         int right = text.length();
 
@@ -464,7 +300,29 @@ public class Main {
         while (right > left && text.charAt(right - 1) <= ' ')
             right--;
 
-        text = text.substring(left, right);
+        return text.substring(left, right);
+    }
+
+    // Prints the message, reads one line, and returns it without spaces at both ends
+    public static String readText(String message) {
+        System.out.print(message);
+        return trimText(scanner.nextLine());
+    }
+
+    // Keeps asking until the user enters a valid integer
+    public static int readInt(String message) {
+        while (true) {
+            try {
+                return Integer.parseInt(readText(message));
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+    }
+
+    // Reads a vehicle type; returns null if the input is not a valid type
+    public static VehicleType readVehicleType() {
+        String text = readText("Vehicle type (SEDAN, LUXURY_SEDAN, SUV, VAN): ");
         text = text.toUpperCase().replace(" ", "_");
         try {
             return VehicleType.valueOf(text);
@@ -476,20 +334,9 @@ public class Main {
 
     // Reads a date/time in the format MM/DD/YYYY HH:MM; returns null if it is invalid
     public static IDateTime readDateTime(String message) {
-        System.out.print(message);
-        String text = scanner.nextLine();
+        String text = readText(message);
         try {
-            int left = 0;
-            int right = text.length();
-
-            while (left < right && text.charAt(left) <= ' ')
-                left++;
-
-            while (right > left && text.charAt(right - 1) <= ' ')
-                right--;
-
-            text = text.substring(left, right);
-
+            // Find the positions of the separators
             int firstSlash = -1;
             int secondSlash = -1;
             int space = -1;
@@ -515,23 +362,13 @@ public class Main {
                 throw new IllegalArgumentException();
             }
 
-            int month = Integer.parseInt(
-                    text.substring(0, firstSlash));
-
-            int day = Integer.parseInt(
-                    text.substring(firstSlash + 1, secondSlash));
-
-            int year = Integer.parseInt(
-                    text.substring(secondSlash + 1, space));
-
-            int hour = Integer.parseInt(
-                    text.substring(space + 1, colon));
-
-            int minute = Integer.parseInt(
-                    text.substring(colon + 1));
+            int month = Integer.parseInt(text.substring(0, firstSlash));
+            int day = Integer.parseInt(text.substring(firstSlash + 1, secondSlash));
+            int year = Integer.parseInt(text.substring(secondSlash + 1, space));
+            int hour = Integer.parseInt(text.substring(space + 1, colon));
+            int minute = Integer.parseInt(text.substring(colon + 1));
 
             // The DateTime constructor throws IllegalArgumentException for invalid values
-
             return new DateTime(year, month, day, hour, minute);
 
         } catch (Exception e) {
@@ -542,30 +379,21 @@ public class Main {
 
     // Reads the rider IDs of a shared ride separated by ';' (at least two riders)
     public static int[] readRiderIds() {
-        System.out.print("Rider IDs separated by ';' (at least two, e.g. 3;7;12): ");
-        String line = scanner.nextLine();
+        String line = readText("Rider IDs separated by ';' (at least two, e.g. 3;7;12): ");
 
-        int left = 0;
-        int right = line.length();
-
-        while (left < right && line.charAt(left) <= ' ')
-            left++;
-        while (right > left && line.charAt(right - 1) <= ' ')
-            right--;
-
-        line = line.substring(left, right);
-
+        // Count the IDs: the number of ';' plus one
         int count = 1;
-
         for (int i = 0; i < line.length(); i++) {
             if (line.charAt(i) == ';') {
                 count++;
             }
         }
+
         if (count < 2) {
             System.out.println("A shared ride needs more than one rider. The ride was not added.");
             return null;
         }
+
         int[] ids = new int[count];
         int start = 0;
 
@@ -578,14 +406,7 @@ public class Main {
             String part = line.substring(start, end);
 
             try {
-                left = 0;
-                right = part.length();
-                while (left < right && part.charAt(left) <= ' ')
-                    left++;
-                while (right > left && part.charAt(right - 1) <= ' ')
-                    right--;
-                ids[i] = Integer.parseInt(part.substring(left, right));
-
+                ids[i] = Integer.parseInt(trimText(part));
             } catch (NumberFormatException e) {
                 System.out.println("Invalid rider ID: " + part + ". The ride was not added.");
                 return null;
