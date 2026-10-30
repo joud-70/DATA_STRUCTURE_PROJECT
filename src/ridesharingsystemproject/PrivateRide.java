@@ -34,10 +34,12 @@ public class PrivateRide extends Ride implements IPrivateRide {
         return rider != null && rider.getId() == riderId;
     }
 
-    @Override
+   // Returns a description of this private ride, including the driver and rider names
+@Override
 public String toString() {
+    String driverName = (getDriver() == null) ? "none" : getDriver().getName();
+    String riderName = (rider == null) ? "none" : rider.getName();
     return "Private Ride | " + super.toString()
-            + ", Driver: " + getDriver().getName()
-            + ", Rider: " + rider.getName();
+            + ", Driver: " + driverName + ", Rider: " + riderName;
 }
 }
