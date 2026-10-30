@@ -8,7 +8,9 @@ public class DateTime implements IDateTime {
     private final int hour;
     private final int minute;
 
-    // Constructor
+    // Creates a date/time; throws IllegalArgumentException if any value is out of range
+// Compares this date/time with another chronologically
+// Returns the date/time as text in the format MM/DD/YYYY HH:MM
     public DateTime(int year, int month, int day, int hour, int minute) {
 
         if (month < 1 || month > 12) {
