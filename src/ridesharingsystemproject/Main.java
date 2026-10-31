@@ -220,25 +220,20 @@ public class Main {
         if (type.equals("P")) {
             // Private ride: exactly one rider
             int riderId = readInt("Rider ID: ");
-            scheduled = system.schedulePrivateRide(
-                    pickupLocation, pickupTime, dropoffTime,
-                    dropoffLocation, riderId, driverId);
+            scheduled = system.schedulePrivateRide( pickupLocation, pickupTime, dropoffTime, dropoffLocation, riderId, driverId);
         } else {
             // Shared ride: more than one rider
             int[] riderIds = readRiderIds();
             if (riderIds == null)
                 return;
 
-            scheduled = system.scheduleSharedRide(
-                    pickupLocation, pickupTime, dropoffTime,
-                    dropoffLocation, riderIds, driverId);
+            scheduled = system.scheduleSharedRide( pickupLocation, pickupTime, dropoffTime, dropoffLocation, riderIds, driverId);
         }
 
         if (scheduled)
             System.out.println("Ride scheduled successfully.");
         else
-            System.out.println("Failed to schedule the ride (rider or driver not found, "
-                    + "invalid times, or a schedule conflict).");
+            System.out.println("Failed to schedule the ride (rider or driver not found, " + "invalid times, or a schedule conflict).");
     }
 
     // ================== Printing lists ==================
