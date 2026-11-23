@@ -2,34 +2,29 @@
 package ridesharingsystemproject;
 
 
- abstract class  Person implements IPerson {
-    protected final int ID;
-    protected String name ;
-    protected String PhoneNumber;
-    protected LinkedList<IRide> rideHistory = new LinkedList<IRide>();
-
+public abstract class Person implements IPerson {
+    private int ID;
+    private String name;
+    private String PhoneNumber;
+    private IBST<ITimeSlot, IRide> schedule;
+    
+    
+    
     public Person(int ID, String name, String PhoneNumber) {
         this.ID = ID;
         this.name = name;
         setPhoneNumber(PhoneNumber);
+        schedule = new BST<ITimeSlot, IRide>();
     }
     
-    
-    
-    
     public int getId(){
-    
     return ID;
     }
 
+    
     //return the full name of this person.
     public String getName(){
     return name;
-    }
-
-    //Sets the full name of this person.
-    public void setName(String name){
-    this.name=name;
     }
 
     //return the phone number of this person.
@@ -59,19 +54,17 @@ package ridesharingsystemproject;
    }
      
      
-     
-    //return the list of rides associated with this person (as a rider, or as an assigned driver).
-    public LinkedList<IRide> getRideHistory(){
-    
-    return rideHistory ;
+    public IBST<ITimeSlot, IRide> getSchedule() {
+        return schedule;
     }
 
-    // Returns a formatted string describing this person.
-
-    @Override
     public String toString() {
-        return  "ID=" + ID + ", name=" + name + ", PhoneNumber=" + PhoneNumber ;
+        return "ID: " + ID + ", Name: " + name + ", Phone: " + PhoneNumber;
     }
+ 
+
+  
    
 
 }
+
