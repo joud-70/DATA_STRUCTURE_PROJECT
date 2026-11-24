@@ -1,3 +1,4 @@
+package ridesharingsystemproject;
 /**
  * A ride. Rides are immutable and compared by ride ID.
  */
