@@ -1,3 +1,4 @@
+package ridesharingsystemproject;
 /**
  * A private ride with exactly one rider.
  */
