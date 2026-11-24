@@ -2,20 +2,10 @@ package ridesharingsystemproject;
 
 public class PrivateRide extends Ride implements IPrivateRide {
 
-    private IRider rider;
+    private final IRider rider;
 
-    // Constructor
-    public PrivateRide(int rideId,
-                       String pickupLocation,
-                       String dropoffLocation,
-                       IDateTime pickupTime,
-                       IDateTime dropoffTime,
-                       IDriver driver,
-                       IRider rider) {
-
-        super(rideId, pickupLocation, dropoffLocation,
-              pickupTime, dropoffTime, driver);
-
+    public PrivateRide(int rideId, String pickupLocation, String dropoffLocation,ITimeSlot timeSlot, IDriver driver, IRider rider) {
+        super(rideId, pickupLocation, dropoffLocation, timeSlot, driver);
         this.rider = rider;
     }
 
@@ -25,21 +15,12 @@ public class PrivateRide extends Ride implements IPrivateRide {
     }
 
     @Override
-    public void setRider(IRider rider) {
-        this.rider = rider;
-    }
-
-    @Override
     public boolean hasRider(int riderId) {
         return rider != null && rider.getId() == riderId;
     }
 
-   // Returns a description of this private ride, including the driver and rider names
-@Override
-public String toString() {
-    String driverName = (getDriver() == null) ? "none" : getDriver().getName();
-    String riderName = (rider == null) ? "none" : rider.getName();
-    return "Private Ride | " + super.toString()
-            + ", Driver: " + driverName + ", Rider: " + riderName;
-}
+    @Override
+    public String toString() {
+        return "Private Ride | " + super.toString() + ", Rider: " + (rider == null ? "none" : rider.getName());
+    }
 }
