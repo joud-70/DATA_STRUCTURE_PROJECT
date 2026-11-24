@@ -1,3 +1,4 @@
+package ridesharingsystemproject;
 /**
  * A shared ride. Participants are stored in a BST keyed by rider ID.
  */
